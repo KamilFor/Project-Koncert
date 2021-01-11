@@ -26,7 +26,6 @@ router.get('/:id', (req, res) => {
 
 // POST
 router.post('/', (req, res) => {
-  console.log(req.body);
   const newSeat = {
     id: uuid.v4(),
     day: req.body.day,
@@ -34,7 +33,6 @@ router.post('/', (req, res) => {
     client: req.body.client,
     email: req.body.email,
   };
-  console.log(newSeat);
 
   if (
     seats.some(() => {
@@ -46,7 +44,7 @@ router.post('/', (req, res) => {
   else {
     seats.push(newSeat);
     res.json(seats);
-    console.log(seats);
+    req.io.broadcast.emit('seatsUpdated', seats);
   }
 });
 
