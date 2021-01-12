@@ -37,6 +37,7 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Error 404 not found' });
 });
 
+// Baza danych mongoose mongodb+srv://JohnDoe:<password>@cluster0.5jjcs.mongodb.net/<dbname>?retryWrites=true&w=majority
 // Mongoose Baza danych
 mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
