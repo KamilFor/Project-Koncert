@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
   });
 });
 
-app.use('/api/concerts', require('./routers/concerts'));
+app.use('/api/concerts', require('./routers/concerts.routes'));
 
 app.use('/api/seats', require('./routers/seats.routes'));
 

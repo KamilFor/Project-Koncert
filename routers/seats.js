@@ -58,26 +58,32 @@ exports.postBasic = async (req, res) => {
 };
 
 // PUT
-
-router.put('/:id', (req, res) => {
-  const updPerson = req.body;
-  seats.forEach((item) => {
-    if (item.id === parseInt(req.params.id)) {
-      item.id = uuid.v4();
-      item.day = updPerson.day ? updPerson.day : item.day;
-      item.seat = updPerson.seat ? updPerson.seat : item.seat;
-      item.client = updPerson.client ? updPerson.client : item.client;
-      item.email = updPerson.email ? updPerson.email : item.email;
-
-      res.json({ msg: `Member updated ${item.text}` });
-    }
-  });
-});
+exports.putId = async (req, res) => {
+  const { id, day, seat, client, email } = req.body;
+  try {
+    await Seats.updateOne(
+      { _id: req.params.id },
+      { $set: { id: id, day: day, seat: seat, client: client, email: email } }
+    );
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
 
 // DELETE
-router.delete('/:id', (req, res) => {
-  res.json({ msg: 'member deleted', item: seats.filter((item) => item.id !== parseInt(req.params.id)) });
-});
+exports.deleteId = async (req, res) => {
+  try {
+    const seat = await Seats.findById(req.params.id);
+    if (seat) {
+      await Seat.deleteOne({ _id: req.params.id });
+      res.json({ message: 'OK' });
+    } else {
+      res.status(404).json({ message: 'Not found ... ' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
 
 // module.exports = router;
 
@@ -140,6 +146,10 @@ router.put('/:id', (req, res) => {
   });
 });
 
+// DELETE 
+router.delete('/:id', (req, res) => {
+  res.json({ msg: 'member deleted', item: seats.filter((item) => item.id !== parseInt(req.params.id)) });
+});
 */
 
 /*

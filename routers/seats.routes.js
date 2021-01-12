@@ -11,12 +11,12 @@ router.get('/seats', SeatsFunctions.getAll);
 router.get('/seats/:id', SeatsFunctions.getId);
 
 // // POST
-router.post('/', SeatsFunctions.postBasic);
+router.post('/seats', SeatsFunctions.postBasic);
 
 // // PUT
-// router.put('/:id', SeatsFunctions.putId);
+router.put('/seats/:id', SeatsFunctions.putId);
 
 // // DELETE
-// router.delete('/:id', SeatsFunctions.deleteId);
+router.delete('/seats/:id', SeatsFunctions.deleteId);
 
 module.exports = router;

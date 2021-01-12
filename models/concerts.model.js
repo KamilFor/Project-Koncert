@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const testimonialsSchema = new mongoose.Schema({
+const concertsSchema = new mongoose.Schema({
   id: { type: Number, required: true },
   day: { type: Number, required: true },
   seat: { type: Number, required: true },
@@ -8,4 +8,4 @@ const testimonialsSchema = new mongoose.Schema({
   email: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Testimonials', testimonialsSchema);
+module.exports = mongoose.model('Concerts', concertsSchema);
