@@ -3,6 +3,7 @@ const cors = require('cors');
 const http = require('http');
 // import socket.io
 const socket = require('socket.io');
+const mongoose = require('mongoose');
 
 const app = express();
 const server = http.createServer(app);
@@ -28,13 +29,22 @@ io.on('connection', (socket) => {
 
 app.use('/api/concerts', require('./routers/concerts'));
 
-app.use('/api/seats', require('./routers/seats'));
+app.use('/api/seats', require('./routers/seats.routes'));
 
-app.use('/api/testimonials', require('./routers/testimonials'));
+app.use('/api/', require('./routers/testimonials.routes'));
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Error 404 not found' });
 });
+
+// Mongoose Baza danych
+mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', (err) => console.log('Error ' + err));
 
 // Server runing
 const PORT = process.env.PORT || 8000;
